@@ -1,0 +1,62 @@
+
+
+.input{
+    margin-top: 30px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    margin-left: 50px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    
+
+}
+
+.visualy-hiden{
+    
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: normal;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+    
+}
+.button{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    
+}
+.button:hover{
+    color: aliceblue;
+    background-color:blue;
+}
+
+.gallery{
+    margin-bottom: 40px;
+}
+
+.load-more{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.load-more:hover{
+    color: aliceblue;
+    background-color:blue;
+}
