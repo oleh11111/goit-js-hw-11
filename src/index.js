@@ -1,4 +1,3 @@
-
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
@@ -18,10 +17,9 @@ let page;
 let searchValue;
 
 function onFormSubmit(e) {
-  
   e.preventDefault();
   galleryDivEl.innerHTML = '';
-  page = 1
+  page = 1;
   searchValue = searchFormInputEL.value.trim();
 
   if (searchValue === '') {
@@ -32,6 +30,70 @@ function onFormSubmit(e) {
     );
     return;
   }
+  fetchSearch(searchValue, page)
+    .then(response => {
+      Notiflix.Notify.info(`Hooray! We found ${response.totalHits} images.`, {
+        timeout: 3000,
+      });
+      response.hits.map(img => {
+        const {
+          previewURL,
+          tags,
+          likes,
+          views,
+          comments,
+          downloads,
+          largeImageURL,
+        } = img;
+        galleryDivEl.insertAdjacentHTML(
+          'beforeend',
+          createMarckupCard(
+            previewURL,
+            tags,
+            likes,
+            views,
+            comments,
+            downloads,
+            largeImageURL
+          )
+        );
+      });
+
+      const initSL = new SimpleLightbox('.gallery a');
+
+      visibilityVisibleBtnLoadMore();
+
+      if (response.hits.length <= response.totalHits) {
+        visibilityNotVisibleBtnLoadMore();
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
+    })
+    .catch(() => {
+      Notiflix.Notify.failure('server error');
+    });
+}
+
+function visibilityVisibleBtnLoadMore() {
+  loadMoreBtnEL.classList.remove('visualy-hiden');
+}
+
+function visibilityNotVisibleBtnLoadMore() {
+  loadMoreBtnEL.classList.add('visualy-hiden');
+}
+
+function onLoadMoreBtnClick() {
+  page = page += 1;
   fetchSearch(searchValue, page)
     .then(response => {
       response.hits.map(img => {
@@ -61,64 +123,14 @@ function onFormSubmit(e) {
       const initSL = new SimpleLightbox('.gallery a');
 
       visibilityVisibleBtnLoadMore();
-      
+      if (response.hits.length <= response.totalHits) {
+        visibilityNotVisibleBtnLoadMore();
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
     })
     .catch(() => {
       Notiflix.Notify.failure('server error');
     });
 }
-
-
-function visibilityVisibleBtnLoadMore() {
-  loadMoreBtnEL.classList.remove('visualy-hiden');
-}
-
-function visibilityNotVisibleBtnLoadMore() {
-  loadMoreBtnEL.classList.add('visualy-hiden');
-}
-
-function onLoadMoreBtnClick(){
-  page = page += 1;
-  fetchSearch(searchValue,page)
-  .then(response => {
-    response.hits.map(img => {
-      const {
-        previewURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-        largeImageURL,
-      } = img;
-      galleryDivEl.insertAdjacentHTML(
-        'beforeend',
-        createMarckupCard(
-          previewURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads,
-          largeImageURL
-        )
-      );
-    });
-
-    const initSL = new SimpleLightbox('.gallery a');
-
-    visibilityVisibleBtnLoadMore();
-    if (response.hits === response.totalhits) {
-      visibilityNotVisibleBtnLoadMore();
-      Notiflix.Notify.info(
-        "We're sorry, but you've reached the end of search results."
-      );
-    }
-  })
-  .catch(() => {
-    Notiflix.Notify.failure('server error');
-  });
-  
-  }
-
-
