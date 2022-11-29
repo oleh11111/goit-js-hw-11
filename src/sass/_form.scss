@@ -1,4 +1,6 @@
-
+.search-form{
+    text-align: center;
+  }
 
 .input{
     margin-top: 30px;
@@ -7,12 +9,16 @@
     margin-left: 50px;
     text-align: center;
     padding-top: 5px;
+    font-size: 18px;
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 3px;
     
+}
 
+.input:focus{
+    border-color: blue;
 }
 
 .visualy-hiden{
@@ -47,16 +53,8 @@
 }
 
 .load-more{
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 3px;
+    
     margin-left: auto;
     margin-right: auto;
 
-}
-.load-more:hover{
-    color: aliceblue;
-    background-color:blue;
 }

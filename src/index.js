@@ -4,8 +4,6 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import { createMarckupCard } from './create_marckup_card';
 import { fetchSearch } from './fetchSearch';
-import { incrimentPage } from './page_management';
-import { resetPage } from './page_management';
 
 const searchFormEL = document.querySelector('#search-form');
 const searchFormInputEL = document.querySelector("[name='searchQuery']");
@@ -16,12 +14,14 @@ const galleryDivEl = document.querySelector('.gallery');
 searchFormEL.addEventListener('submit', onFormSubmit);
 loadMoreBtnEL.addEventListener('click', onLoadMoreBtnClick);
 
-let page = 1;
+let page;
 let searchValue;
+
 function onFormSubmit(e) {
+  
   e.preventDefault();
   galleryDivEl.innerHTML = '';
-  resetPage(1);
+  page = 1
   searchValue = searchFormInputEL.value.trim();
 
   if (searchValue === '') {
@@ -32,11 +32,8 @@ function onFormSubmit(e) {
     );
     return;
   }
-  fetchSearch(searchValue)
+  fetchSearch(searchValue, page)
     .then(response => {
-      // console.log(response);
-
-      console.log(response.hits);
       response.hits.map(img => {
         const {
           previewURL,
@@ -81,11 +78,9 @@ function visibilityNotVisibleBtnLoadMore() {
 }
 
 function onLoadMoreBtnClick(){
-  fetchSearch(searchValue)
+  page = page += 1;
+  fetchSearch(searchValue,page)
   .then(response => {
-    // console.log(response);
-
-    console.log(response.hits);
     response.hits.map(img => {
       const {
         previewURL,
@@ -123,12 +118,7 @@ function onLoadMoreBtnClick(){
   .catch(() => {
     Notiflix.Notify.failure('server error');
   });
-  if (response.hits === response.totalhits) {
-    visibilityNotVisibleBtnLoadMore();
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
+  
   }
-}
 
 

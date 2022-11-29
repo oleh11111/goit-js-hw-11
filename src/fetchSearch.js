@@ -9,10 +9,10 @@ const API_KEY = '31206386-bdc753e0ab5077ac418097ae8';
 //     });
 //   }
 
-export async function fetchSearch(searchValue) {
+export async function fetchSearch(searchValue, page) {
   const response = await axios.get(
-    `${BACE_URL}?key=${API_KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true&page=${+page}&per_page=40`
+    `${BACE_URL}?key=${API_KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`
   );
-  return response.json();
+  return response.data;
   
 }

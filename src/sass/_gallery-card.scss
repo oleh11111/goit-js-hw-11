@@ -1,12 +1,16 @@
+
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .photo-card {
   display: flex;
   flex-direction: column;
   margin-right: 30px;
   margin-bottom: 30px;
+
 }
 
 .photo-card:nth-last-child(-n + 3) {
@@ -33,4 +37,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 15px;
 }
+
+
